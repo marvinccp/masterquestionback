@@ -1,0 +1,32 @@
+{
+  "name": "master_q_back",
+  "version": "1.0.0",
+  "description": "Backend MS Games",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "game",
+    "javascript",
+    "node"
+  ],
+  "author": "Marvin Berrio <marvinccp@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.9.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.22",
+    "pg": "^8.10.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.31.0"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.2.16"
+  }
+}
