@@ -1,6 +1,8 @@
 const Joi = require("joi");
+const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
-const id = Joi.number().integer();
+
+const id = Joi.string().pattern(uuidRegex)
 const name = Joi.string().min(2).max(50);
 const lastName = Joi.string().min(2).max(50);
 const nickName = Joi.string().min(2).max(12);

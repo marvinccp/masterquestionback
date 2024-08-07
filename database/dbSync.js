@@ -1,6 +1,7 @@
 const sequelize = require("../database/database");
 require("../entities/questions/questionModel");
 require("../entities/user/userModel");
+
 const connect = async () => {
   try {
     await sequelize.sync();

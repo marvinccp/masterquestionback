@@ -1,6 +1,8 @@
 const Joi = require("joi");
+const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
-const id = Joi.number().integer();
+
+const id = Joi.string().pattern(uuidRegex)
 const category = Joi.string().min(3).max(50);
 const question = Joi.string();
 const options = Joi.array();
