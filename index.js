@@ -2,13 +2,23 @@ const express = require('express')
 const cors = require('cors')
 require("dotenv").config();
 const routerApi = require("./routes/index");
-const sequelize = require('./database/database')
+const { connect } = require('./database/dbSync');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser')
 const Port = process.env.PORT || 3000
+const corsPort = 3000
 const server  = express()
+server.use(cookieParser())
 server.use(express.json())
-server.use(cors())
+server.use(
+  cors({
+    origin: `http://localhost:${corsPort}`,
+    credentials: true,
+  })
+);
+server.use(morgan('dev'))
 
-require ('./entities/questions/questionModel')
+
 
 server.get('/', (req, res) =>{
     res.json({ respuesta: `Esto va en directo por el puerto ${Port}`})
@@ -19,13 +29,4 @@ server.listen(Port, ()=>{
 console.log(`Ok listen in ${Port}`)
 })
 
-const connect = async () =>{
-    try {
-      await sequelize.sync();
-      console.log("All models were synchronized successfully.");
-    } catch (error) {
-      console.error("Unable to connect to the database:", error);
-    }
-
-}
-connect()
+connect();
