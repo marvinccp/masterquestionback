@@ -1,5 +1,4 @@
 const { models } = require("../../database/database");
-const bcrypt = require("bcrypt");
 const { hashMethod, verifyPass} = require("../../utils/secureMethods.js");
 
 const createUser = async (user) => {

@@ -21,6 +21,7 @@ class Result {
     if (this.rowAsArray) {
       this.parseRow = this._parseRowAsArray
     }
+    this._prebuiltEmptyResultObject = null
   }
 
   // adds a command complete message
@@ -60,7 +61,7 @@ class Result {
   }
 
   parseRow(rowData) {
-    var row = {}
+    var row = { ...this._prebuiltEmptyResultObject }
     for (var i = 0, len = rowData.length; i < len; i++) {
       var rawValue = rowData[i]
       var field = this.fields[i].name
@@ -86,14 +87,20 @@ class Result {
     if (this.fields.length) {
       this._parsers = new Array(fieldDescriptions.length)
     }
+
+    var row = {}
+
     for (var i = 0; i < fieldDescriptions.length; i++) {
       var desc = fieldDescriptions[i]
+      row[desc.name] = null
+
       if (this._types) {
         this._parsers[i] = this._types.getTypeParser(desc.dataTypeID, desc.format || 'text')
       } else {
         this._parsers[i] = types.getTypeParser(desc.dataTypeID, desc.format || 'text')
       }
     }
+    this._prebuiltEmptyResultObject = { ...row }
   }
 }
 

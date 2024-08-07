@@ -1,7 +1,5 @@
 'use strict'
 
-const crypto = require('crypto')
-
 const defaults = require('./defaults')
 
 function escapeElement(elementRepresentation) {
@@ -23,8 +21,17 @@ function arrayString(val) {
       result = result + 'NULL'
     } else if (Array.isArray(val[i])) {
       result = result + arrayString(val[i])
-    } else if (val[i] instanceof Buffer) {
-      result += '\\\\x' + val[i].toString('hex')
+    } else if (ArrayBuffer.isView(val[i])) {
+      var item = val[i]
+      if (!(item instanceof Buffer)) {
+        var buf = Buffer.from(item.buffer, item.byteOffset, item.byteLength)
+        if (buf.length === item.byteLength) {
+          item = buf
+        } else {
+          item = buf.slice(item.byteOffset, item.byteOffset + item.byteLength)
+        }
+      }
+      result += '\\\\x' + item.toString('hex')
     } else {
       result += escapeElement(prepareValue(val[i]))
     }
@@ -164,15 +171,34 @@ function normalizeQueryConfig(config, values, callback) {
   return config
 }
 
-const md5 = function (string) {
-  return crypto.createHash('md5').update(string, 'utf-8').digest('hex')
+// Ported from PostgreSQL 9.2.4 source code in src/interfaces/libpq/fe-exec.c
+const escapeIdentifier = function (str) {
+  return '"' + str.replace(/"/g, '""') + '"'
 }
 
-// See AuthenticationMD5Password at https://www.postgresql.org/docs/current/static/protocol-flow.html
-const postgresMd5PasswordHash = function (user, password, salt) {
-  var inner = md5(password + user)
-  var outer = md5(Buffer.concat([Buffer.from(inner), salt]))
-  return 'md5' + outer
+const escapeLiteral = function (str) {
+  var hasBackslash = false
+  var escaped = "'"
+
+  for (var i = 0; i < str.length; i++) {
+    var c = str[i]
+    if (c === "'") {
+      escaped += c + c
+    } else if (c === '\\') {
+      escaped += c + c
+      hasBackslash = true
+    } else {
+      escaped += c
+    }
+  }
+
+  escaped += "'"
+
+  if (hasBackslash === true) {
+    escaped = ' E' + escaped
+  }
+
+  return escaped
 }
 
 module.exports = {
@@ -182,6 +208,6 @@ module.exports = {
     return prepareValue(value)
   },
   normalizeQueryConfig,
-  postgresMd5PasswordHash,
-  md5,
+  escapeIdentifier,
+  escapeLiteral,
 }
