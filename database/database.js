@@ -7,7 +7,14 @@ const sequelize = new Sequelize(process.env.DATABASE_PUBLIC_URL,
   {
     // host: process.env.DB_HOST,
     dialect: "postgres",
-  }
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false 
+      }
+    }
+  },
+  
 );
 
 module.exports = sequelize;
