@@ -1,12 +1,13 @@
-const bcrypt = require("bcrypt");
+const bcryptjs = require('bcryptjs')
 
 const hashMethod = (userPassword, cicles) => {
-  const hashedPass = bcrypt.hash(userPassword, cicles);
+  const hashedPass = bcryptjs.hash(userPassword, cicles);
+  console.log(hashedPass);
   return hashedPass;
 };
 
 const verifyPass = (pass, dbPass) =>{
-const verify = bcrypt.compare(pass, dbPass)
+const verify = bcryptjs.compare(pass, dbPass)
 return verify
 }
 

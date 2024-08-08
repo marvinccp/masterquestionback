@@ -16,8 +16,8 @@ console.log(process.env.JWT_SECRET);
 
 router.get(
   "/",
-  authentication,
-  checkRole("admin", 'user'),
+  // authentication,
+  // checkRole("admin", 'user'),
   async (req, res) => {
     console.log(req.cookies);
     const users = await getusers();
