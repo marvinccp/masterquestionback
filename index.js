@@ -9,10 +9,10 @@ const Port = process.env.PORT || 3000
 const server  = express()
 server.use(cookieParser())
 server.use(express.json())
-const corsPort = 3001
+// const corsPort = 3001
 server.use(
   cors({
-    origin: `http://localhost:${corsPort}`,
+    origin: [`http://localhost:${3001}`, `http://localhost:${3002}`],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   allowedHeaders: 'Content-Type,Authorization'

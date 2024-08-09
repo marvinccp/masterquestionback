@@ -102,7 +102,7 @@ router.post("/login", async (req, res) => {
     const secret = process.env.JWT_SECRET;
     const token = jwt.sign(payload, secret);
 
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+    // res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
     res.setHeader("Access-Control-Allow-Credentials", "true");
 
     // res.cookie("token", token, {
