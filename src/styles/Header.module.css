@@ -1,0 +1,33 @@
+.container {
+    height: 12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(132, 132, 132);
+    display: flex;
+    justify-content: space-around;
+    
+    background-image:url('../../public/images/background.png');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
+    background-color: rgb(13, 13, 113);
+    background-clip: content-box;
+   background-blend-mode: hue;
+    
+}
+
+.config {
+
+   cursor: pointer;
+}
+
+.button_right {
+
+    width: 100px;
+    height: 28px;
+    border-radius: 15px;
+    border:none;
+    background-color: aqua;
+
+}

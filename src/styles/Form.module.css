@@ -1,0 +1,105 @@
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 85vw;
+    margin: 0 auto;
+    font-size: 1rem;
+    background-color: rgb(228, 228, 228);
+    border-radius: 15px;
+
+}
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0 30px 0;
+}
+.formGroup{
+    display: flex;
+    flex-direction: column;
+    gap:10px
+}
+.options{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 10px 0 0 0;
+    width:100%
+
+}
+.checkbox{
+    margin:  0 0 0 10px
+}
+.optionInput{
+    margin: 0 0 0 0;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+    text-indent: 7px;
+}
+.btn{
+    margin: 15px auto 0 auto;
+    width: 200px;
+    height: 35px;
+   border: none;
+   border-radius: 10px;
+   background: linear-gradient(320deg, orange, rgb(255, 132, 0), rgb(246, 138, 31));
+   cursor: pointer;
+   font-size: 1.3rem;
+   color: aliceblue;
+}
+.btn:hover{
+    background: linear-gradient(320deg, orange, rgba(255, 72, 0, 0.758), rgba(247, 128, 9, 0.949));
+
+}
+.select{
+
+    height: 30px;
+    border-radius: 10px;
+        border: none;
+
+}
+.input{
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+}
+.form{
+    width: 70%;
+}
+
+.message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    color: green;
+}
+
+.error_message{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       padding: 7px;
+       color: rgb(183, 46, 19);
+}
+
+@media(min-width:768px){
+    .formContainer {
+       
+        width: 75vw;
+       
+    }
+}
+
+@media(min-width:1024px){
+     .formContainer {
+
+         width: 55vw;
+
+     }
+}
