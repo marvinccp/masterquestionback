@@ -6,14 +6,16 @@ const { connect } = require('./database/dbSync');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser')
 const Port = process.env.PORT || 3000
-const corsPort = 3000
 const server  = express()
 server.use(cookieParser())
 server.use(express.json())
+const corsPort = 3001
 server.use(
   cors({
     origin: `http://localhost:${corsPort}`,
-    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  allowedHeaders: 'Content-Type,Authorization'
   })
 );
 server.use(morgan('dev'))

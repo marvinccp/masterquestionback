@@ -45,6 +45,7 @@ const login = async (email, password) => {
         email: email,
       },
     });
+    console.log(userToEvaluate);
 
     if (!userToEvaluate) {
       throw new Error("not found");
