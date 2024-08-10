@@ -18,6 +18,13 @@ server.use(
   allowedHeaders: 'Content-Type,Authorization'
   })
 );
+server.use(
+  cors({
+    origin: [`http://localhost:${3001}`, `http://localhost:${3002}`, `http://localhost:${3003}`, `https://masterqgame.vercel.app/`],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: false,
+  })
+);
 server.use(morgan('dev'))
 
 
