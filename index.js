@@ -12,7 +12,7 @@ server.use(express.json())
 // const corsPort = 3001
 server.use(
   cors({
-    origin: [`http://localhost:${3001}`, `http://localhost:${3002}`],
+    origin: [`http://localhost:${3001}`, `http://localhost:${3002}`, `http://localhost:${3003}`, `https://masterqgame.vercel.app/`],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   allowedHeaders: 'Content-Type,Authorization'
