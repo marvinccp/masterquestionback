@@ -7,6 +7,7 @@ const routerApi = (app) => {
   app.use("/game/", router);
   router.use("/Questions/", require("../entities/questions/questionsRouter"))
   router.use("/users/", require('../entities/user/userRouter'))
+  router.use("/players/", require('../entities/player/playersRouter'))
   
 };
 
