@@ -20,15 +20,15 @@ router.get(
   // checkRole("admin", 'user'),
   async (req, res) => {
     // console.log(req.cookies);
-    // const players = await getPlayers();
-    // res.json(players);
+    const players = await getPlayers();
+    res.json(players);
     // if (!req.cookies.token) {
     //   res.status(500).send("Unauthenticated");
     // } else {
     //   const users = await getusers();
     //   res.json(users);
     // }
-   await res.send('Hola')
+
   }
 );
 
