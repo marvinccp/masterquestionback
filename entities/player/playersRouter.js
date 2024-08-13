@@ -12,6 +12,7 @@ const {
 const loginPlayerSchema = require("./playerSchema");
 const validate = require("../../middlewares/validate");
 const { authentication, checkRole } = require("../../middlewares/auth");
+const { transformSync } = require("@babel/core");
 console.log(process.env.JWT_SECRET);
 
 router.get(
@@ -20,15 +21,19 @@ router.get(
   // checkRole("admin", 'user'),
   async (req, res) => {
     // console.log(req.cookies);
-    const players = await getPlayers();
-    res.json(players);
+    try {
+      const players = await getPlayers();
+      res.json(players);
+    } catch (error) {
+      console.log(error, 'No data');
+    }
+  
     // if (!req.cookies.token) {
     //   res.status(500).send("Unauthenticated");
     // } else {
     //   const users = await getusers();
     //   res.json(users);
     // }
-
   }
 );
 

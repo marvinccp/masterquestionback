@@ -1,5 +1,5 @@
 const { models } = require("../../database/database");
-const { hashMethod, verifyPass} = require("../../utils/secureMethods.js");
+const { hashMethod, verifyPass } = require("../../utils/secureMethods.js");
 
 const createUser = async (olayer) => {
   const hash = await hashMethod(player.password, 10);
@@ -12,8 +12,13 @@ const createUser = async (olayer) => {
 };
 
 const getPlayers = async () => {
-  const players = await models.players.findAll()
-  return players;
+  try {
+    const players = await models.players.findAll();
+    console.log(players);
+    return players;
+  } catch (error) {
+    console.log(error, 'No data');
+  }
 };
 
 const getOneUser = async (id) => {
@@ -37,7 +42,6 @@ const updateUser = async (id, changes) => {
   return userUpdate;
 };
 
-
 const login = async (email, password) => {
   try {
     const userToEvaluate = await models.users.findOne({
@@ -52,12 +56,12 @@ const login = async (email, password) => {
     }
 
     const comparePassword = await verifyPass(password, userToEvaluate.password);
-   
-    if (!comparePassword) throw new Error('wrong pass');
+
+    if (!comparePassword) throw new Error("wrong pass");
     delete userToEvaluate.dataValues.password;
     return userToEvaluate;
   } catch (error) {
-    throw error
+    throw error;
   }
 };
 
