@@ -25,6 +25,7 @@ const playerSchema = {
   },
   score: {
     type: DataTypes.INTEGER,
+    allowNull: true,
   },
 };
 
