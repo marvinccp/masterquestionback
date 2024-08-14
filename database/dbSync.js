@@ -1,6 +1,7 @@
 const sequelize = require("../database/database");
 require("../entities/questions/questionModel");
 require("../entities/user/userModel");
+require("../entities/player/playerModel");
 
 const connect = async () => {
   try {

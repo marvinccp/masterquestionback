@@ -3,9 +3,9 @@ const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-
 
 
 const id = Joi.string().pattern(uuidRegex)
-const nickName = Joi.string().min(2).max(12);
+const nickname = Joi.string().min(2).max(12);
 const email = Joi.string();
-const password = Joi.string().min(8);
+const password = Joi.string().min(6);
 const role = Joi.string().min(2).max(12);
 
 const getPlayerSchema = Joi.object({
@@ -14,21 +14,20 @@ const getPlayerSchema = Joi.object({
 
 const createPlayerSchema = Joi.object({
   email: email.required(),
-  nickName: nickName.required(),
+  nickName: nickname.required(),
   password: password.required(),
   role: role.required()
 });
 const updatePlayerSchema = Joi.object({
-  nickName: nickName.required(),
+  nickName: nickname.required(),
   email: email.required(),
   password: password.required(),
-  role: role.required(),
+  role: role
 });
 
 const loginPlayerSchema = Joi.object({
   email: email.required(),
   password: password.required(),
-  role: role.required(),
 });
 
 module.exports = {

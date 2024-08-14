@@ -7,12 +7,13 @@ const playerSchema = {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  nickName: {
+  nickname: {
     type: DataTypes.STRING,
     allowNull: true,
   },
   role: {
     type: DataTypes.STRING,
+    allowNull: true,
     defaultValue: "player",
   },
   email: {
@@ -26,6 +27,16 @@ const playerSchema = {
   score: {
     type: DataTypes.INTEGER,
     allowNull: true,
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+  },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
   },
 };
 
