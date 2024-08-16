@@ -5,6 +5,7 @@ const routerApi = require("./routes/index");
 const { connect } = require("./database/dbSync");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const errorHandler = require("./middlewares/errorHandler");
 const Port = process.env.PORT || 3000;
 const server = express();
 server.use(cookieParser());
@@ -25,6 +26,7 @@ server.use(
 );
 
 server.use(morgan("dev"));
+server.use(errorHandler)
 
 server.get("/", (req, res) => {
   res.json({ respuesta: `Esto va en directo por el puerto ${Port}` });

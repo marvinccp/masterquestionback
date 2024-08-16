@@ -23,6 +23,7 @@ const loginPlayer = async (body) => {
   if (!email && !nickname) {
     throw new Error("Email or Nickname must be provided");
   }
+  
   try {
     //encontrar nuestro player
     const playerToEvaluate = await models.players.findOne({

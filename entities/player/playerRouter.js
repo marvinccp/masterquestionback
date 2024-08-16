@@ -20,8 +20,9 @@ router.post("/", async (req, res) => {
   res.json(newPlayer);
 });
 
-router.post("/login", async (req, res) => {
-  const body = req.body;
+router.post("/login", async (req, res, next) => {
+  try {
+    const body = req.body;
   const player = await loginPlayer(body);
   const { id, nickname, role, email, score } = body;
   const payload = {
@@ -36,6 +37,10 @@ router.post("/login", async (req, res) => {
     expiresIn: "24h",
   });
   res.send({ player, token });
+  } catch (error) {
+    next(error)
+  }
+  
 });
 
 module.exports = router;
