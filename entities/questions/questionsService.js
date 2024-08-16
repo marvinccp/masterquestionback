@@ -1,3 +1,4 @@
+const { Sequelize } = require("sequelize");
 const { models } = require("../../database/database");
 console.log(models);
 const boom = require("@hapi/boom");
@@ -79,7 +80,9 @@ class QuestionService {
   }
 
   find = async () => {
-    const questions = await models.questions.findAll();
+    const questions = await models.questions.findAll({
+      order: Sequelize.literal('RANDOM()'),
+    });
     return questions;
   };
 

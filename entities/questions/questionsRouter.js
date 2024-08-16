@@ -7,6 +7,7 @@ const {
   getQuestionSchema, 
   createQuestionSchema, 
   updateQuestionSchema} = require("./questionSchema");
+const { Sequelize } = require("sequelize");
 
 router.get("/", 
 async (req, res, next) => {
