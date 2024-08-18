@@ -10,21 +10,23 @@ const getPlayers = async () => {
 const createPlayer = async (body) => {
   const { email, nickname } = body;
   try {
-    const playerToEvaluate = await models.players.findOne({
-      where: {
-        [Op.or]: [
-          email ? { email } : null,
-          nickname ? { nickname } : null,
-        ].filter(Boolean),
-      },
-    });
-
-    console.log(playerToEvaluate);
-
-    if (playerToEvaluate) {
-      return { success: false, message: "Player already exists" };
+    if (email) {
+      const emailExists = await models.players.findOne({
+        where: { email },
+      });
+      if (emailExists) {
+        return { success: false, message: "email ya existe" };
+      }
     }
 
+    if (nickname) {
+      const nicknameExists = await models.players.findOne({
+        where: { nickname },
+      });
+      if (nicknameExists) {
+        return { success: false, message: "nickname ya existe" };
+      }
+    }
     const hashPass = await hashMethod(body.password, 10);
     const newPlayer = await models.players.create({
       ...body,
@@ -32,9 +34,9 @@ const createPlayer = async (body) => {
     });
     delete newPlayer.dataValues.password;
     
-    return { success: true, player: newPlayer, message: 'Player creado con exito' };
+    return { success: true, player: newPlayer, message: 'Jugador creado con exito' };
   } catch (error) {
-    return { success: false, message: "Failed to create player" };
+    return { success: false, message: "Falló la creación del jugador" };
   }
 };
 
