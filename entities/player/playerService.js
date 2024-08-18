@@ -20,7 +20,7 @@ const createPlayer = async (body) => {
     });
 
     console.log(playerToEvaluate);
-    
+
     if (playerToEvaluate) {
       return { success: false, message: "Player already exists" };
     }
@@ -31,7 +31,7 @@ const createPlayer = async (body) => {
       password: hashPass,
     });
     delete newPlayer.dataValues.password;
-    return { success: true, player: newPlayer };
+    return { success: true, player: newPlayer, message: 'Player creado con exito' };
   } catch (error) {
     return { success: false, message: "Failed to create player" };
   }
