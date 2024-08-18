@@ -13,16 +13,26 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  try {
   const body = req.body;
   const newPlayer = await createPlayer(body);
-  // const {password, ...playerData} = newPlayer.dataValues
-  // res.json(playerData)
-  res.json(newPlayer);
+  
+
+  if(!newPlayer.success){
+    return res.status(400).json({
+      error:newPlayer.message
+    })
+  }
+  res.status(201).json(newPlayer.player);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create player" });
+  }
+  
 });
 
 router.post("/login", async (req, res, next) => {
   try {
-    const body = req.body;
+  const body = req.body;
   const player = await loginPlayer(body);
   const { id, nickname, role, email, score } = body;
   const payload = {
