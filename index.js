@@ -18,7 +18,7 @@ server.use(
       `http://localhost:${3002}`,
       `http://localhost:${3003}`,
       `https://masterqgame.vercel.app`,
-      'https://www.masterquestion.es/'
+      'https://www.masterquestion.es'
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
