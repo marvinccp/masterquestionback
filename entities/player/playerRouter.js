@@ -20,7 +20,11 @@ router.post("/", async (req, res) => {
     if (!newPlayer.success) {
       return res.status(400).json({ error: newPlayer.message });
     } else {
-      return res.status(201).json(newPlayer.player);
+      return res.status(201).json({
+        success: true,
+        player: newPlayer.player,
+        message: newPlayer.message,
+      });
     }
   } catch (error) {
     return res.status(500).json({ error: "Failed to create player" });
