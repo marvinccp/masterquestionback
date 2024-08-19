@@ -34,10 +34,10 @@ router.post("/", async (req, res) => {
 router.post("/login", async (req, res, next) => {
   try {
     const body = req.body;
-    const player = await loginPlayer(body);
+    const login = await loginPlayer(body);
 
-    if (!player.success) {
-      return res.status(400).json({ error: loginResult.message });
+    if (!login.success) {
+      return res.status(400).json({ error: login.message });
     }
 
     const { id, nickname, role, email, score } = body;
@@ -54,7 +54,7 @@ router.post("/login", async (req, res, next) => {
     });
     res
       .status(200)
-      .json({ player: loginResult.player, token, message: "Login Exitoso" });
+      .json({ player: login.player, token, message: "Login Exitoso" });
   } catch (error) {
     if (error.isOperational) {
       res.status(error.statusCode).json({ error: error.message });
