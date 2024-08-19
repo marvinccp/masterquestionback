@@ -33,19 +33,23 @@ const createPlayer = async (body) => {
       password: hashPass,
     });
     delete newPlayer.dataValues.password;
-    
-    return { success: true, player: newPlayer, message: 'Jugador creado con exito' };
+
+    return {
+      success: true,
+      player: newPlayer,
+      message: "Jugador creado con exito",
+    };
   } catch (error) {
     return { success: false, message: "Falló la creación del jugador" };
   }
 };
 
 const loginPlayer = async (body) => {
-  //recibir data
-  console.log(body);
   const { email, nickname, password } = body;
   if (!email && !nickname) {
-    throw new Error("Email or Nickname must be provided");
+    return {success:false,  message: "Email o Nickname requerido" };
+  } else if (!password) {
+    return {success:false,  message: "password requerido" };
   }
 
   try {
@@ -59,20 +63,19 @@ const loginPlayer = async (body) => {
       },
     });
 
-    console.log(playerToEvaluate);
     // si no está
     if (!playerToEvaluate) {
-      throw new Error("Not found baby");
+      return { success:false, message: "jugador no encontrado o no existe" };
     }
 
     //lo tenemos, comparamos pass
     const comparePass = await verifyPass(password, playerToEvaluate.password);
+    if (!comparePass) return {success:false, message: 'credenciales invalidas'};
 
-    if (!comparePass) throw new Error("wrong pass");
     delete playerToEvaluate.dataValues.password;
-    return playerToEvaluate;
+    return {success: true, player: playerToEvaluate}
   } catch (error) {
-    throw new Error("error data");
+    return { success: false, message: error.message };
   }
 };
 
