@@ -52,7 +52,7 @@ router.post("/login", async (req, res, next) => {
     const token = jwt.sign(payload, secret, {
       expiresIn: "24h",
     });
-    res.status(200).json({ player: loginResult.player, token });
+    res.status(200).json({ player: loginResult.player, token, message: "Login Exitoso" });
   } catch (error) {
     next(error);
   }

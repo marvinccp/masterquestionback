@@ -70,12 +70,12 @@ const loginPlayer = async (body) => {
 
     //lo tenemos, comparamos pass
     const comparePass = await verifyPass(password, playerToEvaluate.password);
-    if (!comparePass) return {success:false, message: 'credenciales invalidas'};
+    if (!comparePass) return {success:false, message: 'Contraseña incorrecta'};
 
     delete playerToEvaluate.dataValues.password;
     return {success: true, player: playerToEvaluate}
   } catch (error) {
-    return { success: false, message: error.message };
+    return { success: false, message: "Error del servidor: " + error.message};
   }
 };
 
