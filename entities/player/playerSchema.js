@@ -7,6 +7,7 @@ const nickname = Joi.string().min(2).max(12);
 const email = Joi.string();
 const password = Joi.string().min(6);
 const role = Joi.string().min(2).max(12);
+const score = Joi.number()
 
 const getPlayerSchema = Joi.object({
   id: id.required(),
@@ -16,13 +17,15 @@ const createPlayerSchema = Joi.object({
   email: email.required(),
   nickName: nickname.required(),
   password: password.required(),
-  role: role.required()
+  role: role.required(),
+  score:score.required()
 });
 const updatePlayerSchema = Joi.object({
   nickName: nickname.required(),
   email: email.required(),
   password: password.required(),
-  role: role
+  role: role,
+  score:score
 });
 
 const loginPlayerSchema = Joi.object({

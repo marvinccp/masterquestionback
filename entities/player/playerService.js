@@ -44,7 +44,7 @@ const createPlayer = async (body) => {
     return {
       success: true,
       player: newPlayer,
-      message: "Jugador creado con exito",
+      message: "Jugador creado con éxito",
     };
   } catch (error) {
     return { success: false, message: "Falló la creación del jugador" };
