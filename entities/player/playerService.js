@@ -8,25 +8,32 @@ const getPlayers = async () => {
 };
 
 const createPlayer = async (body) => {
-  const { email, nickname } = body;
-  try {
-    if (email) {
-      const emailExists = await models.players.findOne({
-        where: { email },
-      });
-      if (emailExists) {
-        return { success: false, message: "email ya existe" };
-      }
-    }
+  const { email, nickname, password } = body;
 
-    if (nickname) {
-      const nicknameExists = await models.players.findOne({
-        where: { nickname },
-      });
-      if (nicknameExists) {
-        return { success: false, message: "nickname ya existe" };
-      }
-    }
+  if (!email) {
+    return { success: false, message: "Email  requerido" };
+  } else if (!nickname) {
+    return { success: false, message: "Nickname requerido" };
+  } else if (!password) {
+    return { success: false, message: "Password requerido" };
+  } else if (!email.includes("@")) {
+    return { success: false, message: "Formato invalido" };
+  }
+
+  try {
+    const emailExists = await models.players.findOne({
+      where: { email },
+    });
+    const nicknameExists = await models.players.findOne({
+      where: { nickname },
+    });
+
+    if (emailExists && nicknameExists)
+      return { success: false, message: "Jugador ya existe" };
+    else if (emailExists) return { success: false, message: "email ya existe" };
+    else if (nicknameExists)
+      return { success: false, message: "nickname ya existe" };
+
     const hashPass = await hashMethod(body.password, 10);
     const newPlayer = await models.players.create({
       ...body,
@@ -47,9 +54,9 @@ const createPlayer = async (body) => {
 const loginPlayer = async (body) => {
   const { email, nickname, password } = body;
   if (!email && !nickname) {
-    return {success:false,  message: "Email o Nickname requerido" };
+    return { success: false, message: "Email o Nickname requerido" };
   } else if (!password) {
-    return {success:false,  message: "password requerido" };
+    return { success: false, message: "password requerido" };
   }
 
   try {
@@ -65,17 +72,18 @@ const loginPlayer = async (body) => {
 
     // si no está
     if (!playerToEvaluate) {
-      return { success:false, message: "jugador no encontrado o no existe" };
+      return { success: false, message: "jugador no encontrado o no existe" };
     }
 
     //lo tenemos, comparamos pass
     const comparePass = await verifyPass(password, playerToEvaluate.password);
-    if (!comparePass) return {success:false, message: 'Contraseña incorrecta'};
+    if (!comparePass)
+      return { success: false, message: "Contraseña incorrecta" };
 
     delete playerToEvaluate.dataValues.password;
-    return {success: true, player: playerToEvaluate}
+    return { success: true, player: playerToEvaluate };
   } catch (error) {
-    return { success: false, message: "Error del servidor: " + error.message};
+    return { success: false, message: "Error del servidor: " + error.message };
   }
 };
 

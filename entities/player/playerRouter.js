@@ -15,6 +15,9 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const body = req.body;
+    if(!body){
+      return res.status(400).json({ error: newPlayer.message });
+    }
     const newPlayer = await createPlayer(body);
 
     if (!newPlayer.success) {
@@ -27,7 +30,7 @@ router.post("/", async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(500).json({ error: "Failed to create player" });
+    return res.status(500).json({ error: "Falló la creación del jugador"  });
   }
 });
 
