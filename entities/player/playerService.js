@@ -27,9 +27,10 @@ const updatePlayerScore = async (req, res) => {
   const { playerId, sessionPoints } = req.body;
   try {
     const player = await models.players.findByPk(playerId);
-    if(!player){
-      return res.status(404).json({ error: "jugador no encontrado o no existe" });
-
+    if (!player) {
+      return res
+        .status(404)
+        .json({ error: "jugador no encontrado o no existe" });
     }
     console.log(player);
 
@@ -42,6 +43,18 @@ const updatePlayerScore = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Error al actualizar el puntaje" });
   }
+};
+
+const getTopScore = async (req, res) => {
+  res.json({
+    message: 'hola'
+  })
+  // try {
+  //   const playersTop = await models.players.findAll();
+  //   res.status(200).json(playersTop);
+  // } catch (error) {
+  //   res.status(500).json({ message: "Error al obtener los jugadores" });
+  // }
 };
 
 const createPlayer = async (body) => {
@@ -130,4 +143,5 @@ module.exports = {
   loginPlayer,
   getOne,
   updatePlayerScore,
+  getTopScore
 };

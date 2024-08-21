@@ -7,6 +7,7 @@ const {
   loginPlayer,
   getOne,
   updatePlayerScore,
+  getTopScore
 } = require("./playerService");
 
 router.get("/", async (req, res) => {
@@ -36,7 +37,9 @@ router.get("/:id", async (req, res) => {
 
 
 
+router.get('/top-score', getTopScore)
 router.patch('/points', updatePlayerScore)
+
 
 router.post("/", async (req, res) => {
   try {
