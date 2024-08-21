@@ -27,6 +27,10 @@ const updatePlayerScore = async (req, res) => {
   const { playerId, sessionPoints } = req.body;
   try {
     const player = await models.players.findByPk(playerId);
+    if(!player){
+      return res.status(404).json({ error: "jugador no encontrado o no existe" });
+
+    }
     console.log(player);
 
     player.score += sessionPoints;
