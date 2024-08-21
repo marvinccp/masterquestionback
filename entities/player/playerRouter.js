@@ -1,21 +1,47 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const { getPlayers, createPlayer, loginPlayer } = require("./playerService");
+const {
+  getPlayers,
+  createPlayer,
+  loginPlayer,
+  getOne,
+  updatePlayerScore,
+} = require("./playerService");
 
 router.get("/", async (req, res) => {
   try {
     const players = await getPlayers();
-    res.json(players);
+    if (!players) {
+      return res.status(500).json({ error: players.message });
+    }
+    return res.status(200).json({ succes: true, players: players });
   } catch (error) {
-    console.log(error, "No data");
+    return res.status(500).json({ error: players.message });
   }
 });
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const player = await getOne(id);
+    if (!player.success) {
+      return res.status(400).json({ error: player.message });
+    }
+    return res.status(200).json(player);
+  } catch (error) {
+    return res.status(500).json({ error: player.message });
+  }
+});
+
+
+
+router.patch('/points', updatePlayerScore)
 
 router.post("/", async (req, res) => {
   try {
     const body = req.body;
-    if(!body){
+    if (!body) {
       return res.status(400).json({ error: newPlayer.message });
     }
     const newPlayer = await createPlayer(body);
@@ -30,7 +56,7 @@ router.post("/", async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(500).json({ error: "Falló la creación del jugador"  });
+    return res.status(500).json({ error: "Falló la creación del jugador" });
   }
 });
 
@@ -66,5 +92,7 @@ router.post("/login", async (req, res, next) => {
     }
   }
 });
+
+
 
 module.exports = router;

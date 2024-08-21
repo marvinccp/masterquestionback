@@ -7,6 +7,39 @@ const getPlayers = async () => {
   return players;
 };
 
+const getOne = async (id) => {
+  try {
+    const player = await models.players.findByPk(id);
+    if (!player) {
+      return { message: "jugador no encontrado o no existe" };
+    }
+
+    playerResponse = player.toJSON();
+    delete playerResponse.password;
+    // delete player.dataValues.password;
+    return { success: true, playerResponse };
+  } catch (error) {
+    return { success: false, message: "Error inesperado" };
+  }
+};
+
+const updatePlayerScore = async (req, res) => {
+  const { playerId, sessionPoints } = req.body;
+  try {
+    const player = await models.players.findByPk(playerId);
+    console.log(player);
+
+    player.score += sessionPoints;
+    await player.save();
+
+    const updatedPlayer = await models.players.findByPk(playerId);
+
+    return res.status(200).json({ success: true, updatedPlayer });
+  } catch (error) {
+    return res.status(500).json({ error: "Error al actualizar el puntaje" });
+  }
+};
+
 const createPlayer = async (body) => {
   const { email, nickname, password } = body;
 
@@ -91,4 +124,6 @@ module.exports = {
   getPlayers,
   createPlayer,
   loginPlayer,
+  getOne,
+  updatePlayerScore,
 };
