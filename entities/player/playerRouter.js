@@ -37,7 +37,7 @@ router.get("/:id", async (req, res) => {
 
 
 
-router.get('/top-score', getTopScore)
+router.get('/top/score', getTopScore)
 router.patch('/points', updatePlayerScore)
 
 

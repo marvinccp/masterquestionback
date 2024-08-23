@@ -46,15 +46,16 @@ const updatePlayerScore = async (req, res) => {
 };
 
 const getTopScore = async (req, res) => {
-  res.json({
-    message: 'hola'
-  })
-  // try {
-  //   const playersTop = await models.players.findAll();
-  //   res.status(200).json(playersTop);
-  // } catch (error) {
-  //   res.status(500).json({ message: "Error al obtener los jugadores" });
-  // }
+
+  try {
+    const playersTop = await models.players.findAll({
+      order: [['score', 'DESC']],
+      limit: 10,
+    });
+    res.status(200).json(playersTop);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener los jugadores" });
+  }
 };
 
 const createPlayer = async (body) => {
