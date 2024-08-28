@@ -9,7 +9,7 @@ const {
   updatePlayerScore,
   getTopScore,
 } = require("./playerService");
-const { sendWelcomeEmail } = require("../../mailing/mailer.js");
+// const { sendWelcomeEmail } = require("../../mailing/mailer.js");
 
 router.get("/", async (req, res) => {
   try {
@@ -55,7 +55,7 @@ router.post("/", async (req, res) => {
       const token = jwt.sign(payload, secret, {
         expiresIn: "24h",
       });
-      await sendWelcomeEmail(body.email);
+      // await sendWelcomeEmail(body.email);
       return res.status(201).json({
         success: true,
         player: newPlayer.player,
