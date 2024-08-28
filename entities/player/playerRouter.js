@@ -56,12 +56,11 @@ router.post("/", async (req, res) => {
         expiresIn: "24h",
       });
 
-
-      const emailResponse = await sendWelcomeEmail(body.email, '¡Bienvenido a MasterQuestion!');
-      if (!emailResponse.success) {
-        return res.status(500).json({ error: emailResponse.message });
+      try {
+        await sendWelcomeEmail(body.email, '¡Bienvenido a MasterQuestion!');
+      } catch (error) {
+        console.log(error);
       }
-
 
       return res.status(201).json({
         success: true,

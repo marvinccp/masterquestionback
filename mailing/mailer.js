@@ -12,11 +12,11 @@ const transporter = nodemailer.createTransport({
 
 const sendWelcomeEmail = async (to, message) => {
     const mailOptions = {
-        from: '"Nombre de tu Juego" <tu_correo@tu_dominio.com>',
+        from: '"MasterQuestion" <hola@masterquestion.es>',
         to: to,
         subject: '¡Bienvenido a MasterQuestion!',
         text: message,
-        html: `<p>${message}</p>`, // Mensaje en HTML
+        html: `<p>${message}</p>`,
     };
 
     try {
