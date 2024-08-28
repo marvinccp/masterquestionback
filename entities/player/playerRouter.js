@@ -7,7 +7,7 @@ const {
   loginPlayer,
   getOne,
   updatePlayerScore,
-  getTopScore
+  getTopScore,
 } = require("./playerService");
 
 router.get("/", async (req, res) => {
@@ -35,11 +35,8 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
-
-router.get('/top/score', getTopScore)
-router.patch('/points', updatePlayerScore)
-
+router.get("/top/score", getTopScore);
+router.patch("/points", updatePlayerScore);
 
 router.post("/", async (req, res) => {
   try {
@@ -52,10 +49,17 @@ router.post("/", async (req, res) => {
     if (!newPlayer.success) {
       return res.status(400).json({ error: newPlayer.message });
     } else {
+      const payload = body;
+      const secret = process.env.JWT_SECRET;
+      const token = jwt.sign(payload, secret, {
+        expiresIn: "24h",
+      });
+
       return res.status(201).json({
         success: true,
         player: newPlayer.player,
         message: newPlayer.message,
+        token: token,
       });
     }
   } catch (error) {
@@ -95,7 +99,5 @@ router.post("/login", async (req, res, next) => {
     }
   }
 });
-
-
 
 module.exports = router;

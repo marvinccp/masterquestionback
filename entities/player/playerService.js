@@ -3,8 +3,12 @@ const { models } = require("../../database/database");
 const { hashMethod, verifyPass } = require("../../utils/secureMethods.js");
 
 const getPlayers = async () => {
-  const players = await models.players.findAll();
-  return players;
+  try {
+    const players = await models.players.findAll();
+    return players;
+  } catch (error) {
+    return { success: false, message: error };
+  }
 };
 
 const getOne = async (id) => {
@@ -32,27 +36,25 @@ const updatePlayerScore = async (req, res) => {
         .status(404)
         .json({ error: "jugador no encontrado o no existe" });
     }
-    console.log(player);
 
     player.score += sessionPoints;
     await player.save();
 
     const updatedPlayer = await models.players.findByPk(playerId);
 
-    return res.status(200).json({ success: true, updatedPlayer });
+    return res.status(200).json({ success: true});
   } catch (error) {
     return res.status(500).json({ error: "Error al actualizar el puntaje" });
   }
 };
 
 const getTopScore = async (req, res) => {
-
   try {
     const playersTop = await models.players.findAll({
-      order: [['score', 'DESC']],
+      order: [["score", "DESC"]],
       limit: 10,
     });
-    res.status(200).json(playersTop);
+    res.status(200).json({ players: playersTop });
   } catch (error) {
     res.status(500).json({ message: "Error al obtener los jugadores" });
   }
@@ -144,5 +146,5 @@ module.exports = {
   loginPlayer,
   getOne,
   updatePlayerScore,
-  getTopScore
+  getTopScore,
 };
