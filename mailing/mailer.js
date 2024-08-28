@@ -10,20 +10,21 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-const sendWelcomeEmail = async (to) => {
+const sendWelcomeEmail = async (to, message) => {
     const mailOptions = {
         from: '"Nombre de tu Juego" <tu_correo@tu_dominio.com>',
         to: to,
         subject: '¡Bienvenido a MasterQuestion!',
-        text: '¡Gracias por unirte a nuestro juego!',
+        text: message,
         html: `<p>${message}</p>`, // Mensaje en HTML
     };
 
     try {
-        const info = await transporter.sendMail(mailOptions);
-        return info;
+        await transporter.sendMail(mailOptions);
+        console.log('Correo enviado');
+        return { success: true, message: 'Correo enviado exitosamente' };
     } catch (error) {
-        return ({ succes: true, message: 'Error al enviar el correo'})        
+        return ({ succes: false, message: 'Error al enviar el correo'})        
     }
 };
 

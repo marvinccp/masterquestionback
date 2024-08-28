@@ -9,7 +9,7 @@ const {
   updatePlayerScore,
   getTopScore,
 } = require("./playerService");
-// const { sendWelcomeEmail } = require("../../mailing/mailer.js");
+const { sendWelcomeEmail } = require("../../mailing/mailer.js");
 
 router.get("/", async (req, res) => {
   try {
@@ -55,7 +55,14 @@ router.post("/", async (req, res) => {
       const token = jwt.sign(payload, secret, {
         expiresIn: "24h",
       });
-      // await sendWelcomeEmail(body.email);
+
+
+      const emailResponse = await sendWelcomeEmail(body.email, '¡Bienvenido a MasterQuestion!');
+      if (!emailResponse.success) {
+        return res.status(500).json({ error: emailResponse.message });
+      }
+
+
       return res.status(201).json({
         success: true,
         player: newPlayer.player,
