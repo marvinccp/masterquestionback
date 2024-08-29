@@ -55,9 +55,10 @@ router.post("/", async (req, res) => {
       const token = jwt.sign(payload, secret, {
         expiresIn: "24h",
       });
-
+console.log(body.email);
       try {
         await sendWelcomeEmail(body.email, '¡Bienvenido a MasterQuestion!');
+        console.log('enviado con exito');
       } catch (error) {
         console.log(error);
       }
