@@ -66,8 +66,7 @@ const sendWelcomeEmail = async (to) => {
             
             <!-- Mensaje de Bienvenida -->
             <h1 style="text-align: center; color: #1a73e8;">¡Bienvenido a MasterQuestion!</h1>
-            <p>Hola!! Gracias por apoyar el trabajo de nuevos desarrolladores.</p>
-    
+  
             <!-- Explicación del Juego -->
             <h2>¿Cómo Funciona el Juego?</h2>
             <p>MQ es el típico juego de trivia, donde escoges un nivel de dificultad y te son entregadas preguntas aleatorias que debes responder en máximo 10 segundos. Al final de cada partida recibirás una puntuación que te ayudará a estar en los primeros lugares del ranking.</p>
